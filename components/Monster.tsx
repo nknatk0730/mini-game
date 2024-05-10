@@ -11,7 +11,7 @@ type MonsterProps =
     mode: 'select';
     onSelected: (id: number) => void;
     onAttack?: undefined;
-    hp: number
+    hp?: undefined; 
   }
   | {
     id: number;
@@ -25,7 +25,7 @@ type MonsterProps =
     mode: 'none';
     onAttack?: undefined;
     onSelected?: undefined;
-    hp: number;
+    hp?: undefined;
   };
 
 export const Monster = ({
@@ -98,7 +98,6 @@ export const Monster = ({
 
       {mode === "select" && (
         <Button
-          disabled={hp <= 0}
           onClick={() => {
             onSelected(id);
           }}
