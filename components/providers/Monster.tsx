@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useState } from "react";
+import useLocalStorage from "use-local-storage";
 
 type ContextType = {
   myMonsterId: number | undefined;
@@ -14,7 +15,9 @@ export const MonsterProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [myMonsterId, setMyMonsterId] = useState<number>();
+  // const [myMonsterId, setMyMonsterId] = useState<number>();
+
+  const [myMonsterId, setMyMonsterId] = useLocalStorage<number>("myMonsterId", 0);
 
   return (
     <Context.Provider
