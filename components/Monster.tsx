@@ -1,42 +1,40 @@
 import { monsters } from "@/lib/monster";
 import { cn } from "@/lib/utils";
+import { Howl } from "howler";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Button } from "./ui/button";
-import { Howl, Howler } from "howler";
-
 
 type MonsterProps = 
-  | {
+  |  {
     id: number;
     mode: 'select';
     onSelected: (id: number) => void;
     onAttack?: undefined;
-    onInit?: undefined; 
+    hp: number
   }
   | {
     id: number;
     mode: 'battle';
     onAttack: () => void;
     onSelected?: undefined;
-    onInit: (setHp: Dispatch<SetStateAction<number>>) => void
+    hp: number;
   }
   | {
     id: number;
     mode: 'none';
     onAttack?: undefined;
     onSelected?: undefined;
-    onInit?: undefined;
+    hp: number;
   };
 
 export const Monster = ({
   id,
   mode,
-  onInit,
+  hp,
   onSelected,
   onAttack,
 }: MonsterProps) => {
-  const [hp, setHp] = useState(100);
   var sound = useMemo(() => {
     return new Howl({
       src: ['sounds/attack.mp3'],
@@ -48,11 +46,6 @@ export const Monster = ({
     monsters.find((monster) => monster.id === id)
   }, [id]);
 
-  useEffect(() => {
-    onInit?.(setHp);
-    console.log('initialization');
-    
-  }, [setHp, onInit])
 
   if (!id) {
     return null;
